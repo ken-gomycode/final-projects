@@ -1,7 +1,7 @@
 export function generateTodos(count: number) {
   const priorities: Array<"low" | "medium" | "high"> = ["low", "medium", "high"];
   return Array.from({ length: count }, (_, i) => ({
-    id: crypto.randomUUID(),
+    id: crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}-${i}`,
     name: `Task ${i + 1}`,
     priority: priorities[i % 3],
   }));

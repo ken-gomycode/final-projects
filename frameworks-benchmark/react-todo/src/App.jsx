@@ -15,7 +15,7 @@ function App() {
     e.preventDefault();
     if (name.trim()) {
       setTodos([...todos, {
-        id: crypto.randomUUID(),
+        id: crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
         name: name.trim(),
         priority
       }]);

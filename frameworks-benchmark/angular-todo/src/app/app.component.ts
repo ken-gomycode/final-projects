@@ -246,7 +246,7 @@ export class AppComponent {
   addTodo() {
     if (this.newTodoName.trim()) {
       this.todos.push({
-        id: crypto.randomUUID(),
+        id: (crypto as any).randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
         name: this.newTodoName,
         priority: this.newTodoPriority,
       });

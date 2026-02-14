@@ -16,7 +16,7 @@ function addTodo() {
   if (!newTodoName.value.trim()) return;
 
   todos.value.push({
-    id: crypto.randomUUID(),
+    id: crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
     name: newTodoName.value,
     priority: newTodoPriority.value
   });

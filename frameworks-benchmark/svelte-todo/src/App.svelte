@@ -15,7 +15,7 @@
       todos = [
         ...todos,
         {
-          id: crypto.randomUUID(),
+          id: crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
           name: newTodoName.trim(),
           priority: newTodoPriority,
         },
