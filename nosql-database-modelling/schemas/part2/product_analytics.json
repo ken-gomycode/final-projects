@@ -1,0 +1,63 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["productId", "sku", "productName", "totalUnitsSold", "totalRevenue", "totalOrders", "averageOrderQuantity", "returnRate", "lastUpdated"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "productId": {
+        "bsonType": "objectId",
+        "description": "Reference to the products collection"
+      },
+      "sku": {
+        "bsonType": "string",
+        "description": "Product SKU for display"
+      },
+      "productName": {
+        "bsonType": "string",
+        "description": "Product name snapshot"
+      },
+      "totalUnitsSold": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "Cumulative units sold"
+      },
+      "totalRevenue": {
+        "bsonType": "double",
+        "minimum": 0,
+        "description": "Cumulative revenue from this product"
+      },
+      "totalOrders": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "Number of orders containing this product"
+      },
+      "averageOrderQuantity": {
+        "bsonType": "double",
+        "minimum": 0,
+        "description": "Average quantity per order"
+      },
+      "returnRate": {
+        "bsonType": "double",
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Fraction of orders returned (0.0 – 1.0)"
+      },
+      "lastUpdated": {
+        "bsonType": "date",
+        "description": "Timestamp of last aggregation pipeline run"
+      }
+    },
+    "additionalProperties": false
+  },
+  "indexes": [
+    { "key": { "productId": 1 }, "unique": true },
+    { "key": { "totalUnitsSold": -1 } },
+    { "key": { "totalRevenue": -1 } },
+    { "key": { "returnRate": -1 } }
+  ],
+  "readPreference": "secondaryPreferred",
+  "readConcern": { "level": "local" },
+  "_shardKey": { "productId": "hashed" }
+}

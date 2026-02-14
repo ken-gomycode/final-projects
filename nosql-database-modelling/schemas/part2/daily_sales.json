@@ -1,0 +1,66 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["date", "totalOrders", "totalRevenue", "averageOrderValue", "lastUpdated"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "date": {
+        "bsonType": "date",
+        "description": "Calendar date for this summary (start of day UTC)"
+      },
+      "totalOrders": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "Number of orders placed on this date"
+      },
+      "totalRevenue": {
+        "bsonType": "double",
+        "minimum": 0,
+        "description": "Sum of all order totals for this date"
+      },
+      "averageOrderValue": {
+        "bsonType": "double",
+        "minimum": 0,
+        "description": "totalRevenue / totalOrders"
+      },
+      "topCategories": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "required": ["category", "revenue", "orders"],
+          "properties": {
+            "category": {
+              "bsonType": "string",
+              "description": "Product category name"
+            },
+            "revenue": {
+              "bsonType": "double",
+              "minimum": 0,
+              "description": "Revenue from this category on this date"
+            },
+            "orders": {
+              "bsonType": "int",
+              "minimum": 0,
+              "description": "Number of orders containing this category"
+            }
+          }
+        },
+        "description": "Top categories by revenue for the day"
+      },
+      "lastUpdated": {
+        "bsonType": "date",
+        "description": "Timestamp of last aggregation pipeline run"
+      }
+    },
+    "additionalProperties": false
+  },
+  "indexes": [
+    { "key": { "date": 1 }, "unique": true },
+    { "key": { "totalRevenue": -1 } }
+  ],
+  "readPreference": "secondaryPreferred",
+  "readConcern": { "level": "local" },
+  "_shardKey": { "date": 1 }
+}

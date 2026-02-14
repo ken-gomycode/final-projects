@@ -1,0 +1,57 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["email", "name", "passwordHash", "createdAt", "updatedAt"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "email": {
+        "bsonType": "string",
+        "description": "Unique email address used for login"
+      },
+      "name": {
+        "bsonType": "object",
+        "required": ["first", "last"],
+        "properties": {
+          "first": {
+            "bsonType": "string",
+            "description": "First name"
+          },
+          "last": {
+            "bsonType": "string",
+            "description": "Last name"
+          }
+        }
+      },
+      "passwordHash": {
+        "bsonType": "string",
+        "description": "Bcrypt-hashed password"
+      },
+      "address": {
+        "bsonType": "object",
+        "properties": {
+          "street": { "bsonType": "string" },
+          "city": { "bsonType": "string" },
+          "state": { "bsonType": "string" },
+          "zip": { "bsonType": "string" },
+          "country": { "bsonType": "string" }
+        }
+      },
+      "createdAt": {
+        "bsonType": "date",
+        "description": "Account creation timestamp"
+      },
+      "updatedAt": {
+        "bsonType": "date",
+        "description": "Last profile update timestamp"
+      }
+    },
+    "additionalProperties": false
+  },
+  "indexes": [
+    { "key": { "email": 1 }, "unique": true },
+    { "key": { "name.last": 1, "name.first": 1 } }
+  ],
+  "_note": "Unchanged from Part 1. Users are not sharded."
+}

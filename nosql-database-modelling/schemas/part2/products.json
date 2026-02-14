@@ -1,0 +1,96 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["sku", "name", "category", "price", "currency", "stock", "isActive", "createdAt", "updatedAt"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "sku": {
+        "bsonType": "string",
+        "description": "Unique stock-keeping unit code"
+      },
+      "name": {
+        "bsonType": "string",
+        "description": "Product display name"
+      },
+      "description": {
+        "bsonType": "string",
+        "description": "Product description for search and display"
+      },
+      "category": {
+        "bsonType": "string",
+        "description": "Top-level product category"
+      },
+      "subcategory": {
+        "bsonType": "string",
+        "description": "Second-level product category"
+      },
+      "price": {
+        "bsonType": "double",
+        "minimum": 0,
+        "description": "Unit price"
+      },
+      "currency": {
+        "bsonType": "string",
+        "enum": ["USD", "EUR", "GBP", "NGN"],
+        "description": "ISO 4217 currency code"
+      },
+      "stock": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "Available inventory count"
+      },
+      "tags": {
+        "bsonType": "array",
+        "items": { "bsonType": "string" },
+        "description": "Search and facet tags"
+      },
+      "images": {
+        "bsonType": "array",
+        "items": { "bsonType": "string" },
+        "description": "Image URLs"
+      },
+      "attributes": {
+        "bsonType": "object",
+        "description": "Category-specific attributes (flexible schema)"
+      },
+      "analyticsSummary": {
+        "bsonType": "object",
+        "properties": {
+          "totalSold": {
+            "bsonType": "int",
+            "description": "Total units sold (denormalized from product_analytics)"
+          },
+          "averageRating": {
+            "bsonType": "double",
+            "description": "Average customer rating"
+          },
+          "lastUpdated": {
+            "bsonType": "date",
+            "description": "When this summary was last refreshed"
+          }
+        },
+        "description": "Lightweight analytics snapshot for product listing pages"
+      },
+      "isActive": {
+        "bsonType": "bool",
+        "description": "Whether the product is listed for sale"
+      },
+      "createdAt": {
+        "bsonType": "date"
+      },
+      "updatedAt": {
+        "bsonType": "date"
+      }
+    },
+    "additionalProperties": false
+  },
+  "indexes": [
+    { "key": { "name": "text", "description": "text", "tags": "text" } },
+    { "key": { "category": 1, "subcategory": 1, "price": 1 } },
+    { "key": { "price": 1 } },
+    { "key": { "sku": 1 }, "unique": true }
+  ],
+  "_shardKey": { "category": 1, "_id": 1 }
+}
