@@ -17,3 +17,9 @@ Each project lives in its own top-level directory (e.g., `nosql-database-modelli
 - When working on a specific project, focus on that project's directory
 - Check the project's own README for language/framework-specific instructions before making changes
 - Run tests and linters from within the project directory unless a root-level script is provided
+
+## Git Commits
+
+- Never add Co-Authored-By or any co-author trailer to commits
+- Keep commit messages under 60 characters
+- Use simple, direct commit messages
